@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Route, Link, Routes } from 'react-router-dom';
+import { Route, Link, Routes, HashRouter } from 'react-router-dom';
 // Functions
 import TaskProvider from './contexts/taskContext';
 // Components
@@ -11,14 +11,15 @@ import './styles/global.scss';
 
 function App() {
   return (
-    <BrowserRouter>
+    // Note: Using HashRouter because BrowserRouter doesn't work with Github Pages (https://stackoverflow.com/questions/71984401/react-router-not-working-with-github-pages)
+    <HashRouter>
       <TaskProvider>
         <Routes>
           <Route path='/' element={<IndexPage />} />
           {/* <Route path='/test' element={<TestPage />} /> */}
         </Routes>
       </TaskProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
