@@ -1,0 +1,32 @@
+.root {
+  background-color: #bbbaba;
+}
+
+.orientation {
+  &--horizontal {
+    width: 100%;
+    height: 1px;
+  }
+
+  &--vertical {
+  }
+}
+
+// NOTE: preset margin style seemed too restrictive, decided its easier to pass spacing through className rather than a property
+// .margin {
+//   &--md {
+//     &.orientation {
+//       &--horizontal {
+//         margin: 8px 0;
+//       }
+//     }
+//   }
+
+//   &--lg {
+//     &.orientation {
+//       &--horizontal {
+//         margin: 16px 0;
+//       }
+//     }
+//   }
+// }

@@ -1,0 +1,81 @@
+.root {
+  display: flex;
+  position: relative;
+  padding: 8px;
+  transition: 0.3s background-color;
+
+  border-radius: 4px;
+
+  &:hover,
+  &:focus-within {
+    background-color: #282b30;
+
+    .grabber {
+      opacity: 1;
+    }
+
+    .menu {
+      opacity: 1;
+    }
+  }
+}
+
+.item {
+  text-align: left;
+  vertical-align: top;
+
+  &:not(:last-child) {
+    margin-right: 16px;
+  }
+}
+
+.checkbox {
+  margin-top: 8px;
+}
+
+.name-item {
+  width: 100%;
+}
+
+// .name {
+//   cursor: pointer;
+//   width: 100%;
+// }
+
+.name-input {
+  width: 100%;
+  margin-top: 2px;
+}
+
+.time-input {
+  margin-top: 4px;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.action-container {
+  position: absolute;
+  transform: translateX(calc(100% + 6px));
+  right: 0;
+  top: 0;
+}
+
+.menu-item {
+  flex-shrink: 0;
+}
+
+.menu {
+  opacity: 0;
+}
+
+.options-menu {
+  background-color: #282b30;
+}
+
+.delete-button {
+  svg {
+    margin-right: 4px;
+  }
+}

@@ -1,0 +1,15 @@
+.root {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: 4px;
+
+  background-color: #222429;
+
+  transition: 0.3s all;
+
+  &:hover {
+    background-color: #26282e;
+  }
+}

@@ -1,0 +1,20 @@
+.root {
+  cursor: pointer;
+
+  text-decoration: none;
+  color: #6caeff;
+
+  &:hover {
+    color: #509fff;
+  }
+}
+
+.width {
+  &--fit-content {
+    width: fit-content;
+  }
+
+  &--fit-container {
+    width: 100%;
+  }
+}

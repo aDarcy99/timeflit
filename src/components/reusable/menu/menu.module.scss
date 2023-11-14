@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #191b1f;
+}
+
+.direction {
+  &--column {
+    flex-direction: column;
+  }
+  &--row {
+    flex-direction: row;
+  }
+}

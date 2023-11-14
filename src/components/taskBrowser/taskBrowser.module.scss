@@ -1,0 +1,46 @@
+.root {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.display {
+  overflow: auto;
+  height: 100%;
+  padding-top: 16px;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  h1 {
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 16px;
+  }
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.open-file-button,
+.create-task-button {
+  gap: 8px;
+
+  svg {
+    path {
+      stroke: #6caeff;
+    }
+  }
+}

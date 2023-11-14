@@ -1,0 +1,36 @@
+.root {
+  margin: 0 auto;
+  padding: 0 24px;
+  max-width: 680px;
+}
+
+.name-container {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.name-input {
+  width: 100%;
+  margin-right: 8px;
+}
+
+.time-heading-container {
+  display: flex;
+  margin-right: 108px;
+}
+
+.estimate-text {
+  margin-right: 48px;
+}
+
+.task-wrapper {
+  margin-bottom: 4px;
+}
+
+.new-task-list-button {
+  margin-top: 8px;
+
+  svg {
+    margin-right: 8px;
+  }
+}

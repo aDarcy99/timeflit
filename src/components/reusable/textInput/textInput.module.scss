@@ -1,0 +1,38 @@
+.input {
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: 0.3s all;
+}
+
+.error {
+  margin-top: 4px;
+
+  font-size: 0.75rem;
+  color: #ff4747;
+}
+
+.variant {
+  &--filled {
+  }
+
+  &--transparent {
+    .input {
+      border: 0px;
+      background-color: transparent;
+      color: #bbbaba;
+    }
+  }
+
+  &--outlined {
+    .input {
+      background-color: transparent;
+      border: 1px solid #bbbaba;
+      color: #bbbaba;
+
+      &.has-error {
+        border-color: #ff4747;
+      }
+    }
+  }
+}

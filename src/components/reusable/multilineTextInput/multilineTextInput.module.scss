@@ -1,0 +1,22 @@
+.root {
+  overflow: hidden;
+  vertical-align: middle;
+  padding: 0px;
+
+  border-radius: 4px;
+}
+
+.variant {
+  &--filled {
+  }
+
+  &--transparent {
+    border: 0px;
+    background-color: transparent;
+    color: #bbbaba;
+  }
+}
+
+.is-autoResize {
+  resize: none;
+}

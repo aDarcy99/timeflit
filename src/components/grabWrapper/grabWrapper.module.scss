@@ -1,0 +1,28 @@
+.root {
+  position: relative;
+
+  &:hover,
+  &:focus-within {
+    .grabber {
+      opacity: 1;
+    }
+  }
+}
+
+.grabber {
+  cursor: grab;
+  position: absolute;
+  transform: translateY(-50%) translateX(-30px);
+  top: 50%;
+  opacity: 0;
+
+  &::before {
+    cursor: initial;
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 100%;
+    right: 0px;
+    transform: translateX(100%);
+  }
+}

@@ -1,0 +1,18 @@
+.root {
+  width: 96px;
+}
+
+.display-digit,
+.display-seperator {
+  color: #575656;
+
+  transition: 0.3s all;
+
+  &.is-active {
+    color: #bbbaba;
+  }
+}
+
+.display-seperator {
+  padding-right: 4px;
+}

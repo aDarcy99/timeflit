@@ -1,0 +1,97 @@
+.root {
+  position: relative;
+  flex-shrink: 0;
+  width: 300px;
+
+  transition: 0.3s width;
+
+  background-color: #15171a;
+
+  &.is-minimized {
+    width: 60px;
+
+    .sidebar-content {
+      transform: translate(-300px, 0);
+      opacity: 0;
+    }
+  }
+}
+
+.minimize-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  svg {
+    transition: 0.3s transform;
+  }
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 300px;
+  padding: 16px;
+
+  transition: 0.3s all;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+
+  svg {
+    margin-right: 8px;
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.task-list-container {
+  overflow: auto;
+  margin-bottom: 12px;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-list-item {
+  cursor: pointer !important; // NOTE: Using important here to override react-beautiful-dnd default grab cursor, on drag the grab cursor will still be shown
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  margin-bottom: 8px; // NOTE: Using margin bottom here instead of gap on the parent element because react-beautiful-dnd doesnt like gap
+  border-radius: 4px;
+
+  transition: 1s background-color;
+
+  &:hover,
+  &:focus-within {
+    background-color: #282b30;
+
+    .delete-button {
+      opacity: 1;
+    }
+  }
+}
+
+.delete-button {
+  flex-shrink: 0;
+  opacity: 0;
+  margin-left: auto;
+}
+
+.new-task-list-button,
+.save-file-button,
+.open-file-button {
+  gap: 8px;
+}

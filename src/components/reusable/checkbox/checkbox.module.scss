@@ -1,0 +1,309 @@
+.root {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+
+  transition: 0.2s all;
+}
+
+.color {
+  &--purple {
+    border: 2px solid white;
+
+    &.is-active {
+      background-color: #7b6eb5;
+      border: 2px solid #7b6eb5;
+    }
+  }
+}
+
+.tick {
+  width: 100%;
+  height: 100%;
+
+  path {
+    stroke: white;
+  }
+}
+
+.frame {
+  background-color: #1e2024;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.frame .div {
+  background-color: #1e2024;
+  border: 1px none;
+  height: 807px;
+  position: relative;
+  width: 1431px;
+}
+
+.frame .overlap {
+  height: 29px;
+  left: 392px;
+  position: absolute;
+  top: 120px;
+  width: 800px;
+}
+
+.frame .text-wrapper {
+  color: #bbbaba;
+  font-family: 'Inter-Light', Helvetica;
+  font-size: 14px;
+  font-weight: 300;
+  left: 606px;
+  letter-spacing: -0.28px;
+  line-height: 21px;
+  position: absolute;
+  top: 8px;
+  white-space: nowrap;
+}
+
+.frame .text-wrapper-2 {
+  color: #bbbaba;
+  font-family: 'Inter-Light', Helvetica;
+  font-size: 14px;
+  font-weight: 300;
+  left: 529px;
+  letter-spacing: -0.28px;
+  line-height: 21px;
+  position: absolute;
+  top: 8px;
+  white-space: nowrap;
+}
+
+.frame .text-wrapper-3 {
+  color: var(--primary-text);
+  font-family: var(--heading-text-font-family);
+  font-size: var(--heading-text-font-size);
+  font-style: var(--heading-text-font-style);
+  font-weight: var(--heading-text-font-weight);
+  left: 0;
+  letter-spacing: var(--heading-text-letter-spacing);
+  line-height: var(--heading-text-line-height);
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 800px;
+}
+
+.frame .text-wrapper-4 {
+  color: var(--tertiary-text);
+  font-family: var(--paragraph-text-font-family);
+  font-size: var(--paragraph-text-font-size);
+  font-style: var(--paragraph-text-font-style);
+  font-weight: var(--paragraph-text-font-weight);
+  left: 427px;
+  letter-spacing: var(--paragraph-text-letter-spacing);
+  line-height: var(--paragraph-text-line-height);
+  position: absolute;
+  top: 278px;
+  white-space: nowrap;
+  width: 509px;
+}
+
+.frame .task {
+  border-radius: 4px;
+  height: 56px;
+  left: 392px;
+  position: absolute;
+  top: 219px;
+  width: 683px;
+}
+
+.frame .group {
+  height: 48px;
+  left: 35px;
+  position: absolute;
+  top: 4px;
+  width: 622px;
+}
+
+.frame .text-wrapper-5 {
+  color: var(--secondary-text);
+  font-family: var(--paragraph-text-font-family);
+  font-size: var(--paragraph-text-font-size);
+  font-style: var(--paragraph-text-font-style);
+  font-weight: var(--paragraph-text-font-weight);
+  left: 494px;
+  letter-spacing: var(--paragraph-text-letter-spacing);
+  line-height: var(--paragraph-text-line-height);
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 69px;
+}
+
+.frame .text-wrapper-6 {
+  color: var(--secondary-text);
+  font-family: var(--paragraph-text-font-family);
+  font-size: var(--paragraph-text-font-size);
+  font-style: var(--paragraph-text-font-style);
+  font-weight: var(--paragraph-text-font-weight);
+  left: 571px;
+  letter-spacing: var(--paragraph-text-letter-spacing);
+  line-height: var(--paragraph-text-line-height);
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 45px;
+}
+
+.frame .p {
+  color: var(--secondary-text);
+  font-family: 'Inter-Regular', Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  top: 0;
+  width: 482px;
+}
+
+.frame .rectangle {
+  border: 2px solid;
+  border-color: #bbbaba;
+  border-radius: 4px;
+  height: 16px;
+  left: 8px;
+  position: absolute;
+  top: 8px;
+  width: 16px;
+}
+
+.frame .overlap-group {
+  border-radius: 4px;
+  height: 32px;
+  left: 392px;
+  position: absolute;
+  top: 187px;
+  width: 683px;
+}
+
+.frame .task-2 {
+  border-radius: 4px;
+  height: 32px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 683px;
+}
+
+.frame .group-2 {
+  height: 24px;
+  left: 35px;
+  position: relative;
+  top: 4px;
+  width: 622px;
+}
+
+.frame .text-wrapper-7 {
+  color: var(--secondary-text);
+  font-family: var(--paragraph-text-font-family);
+  font-size: var(--paragraph-text-font-size);
+  font-style: var(--paragraph-text-font-style);
+  font-weight: var(--paragraph-text-font-weight);
+  left: 0;
+  letter-spacing: var(--paragraph-text-letter-spacing);
+  line-height: var(--paragraph-text-line-height);
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 482px;
+}
+
+.frame .task-3 {
+  background-color: #282b30;
+  border-radius: 4px;
+  height: 32px;
+  left: 392px;
+  position: absolute;
+  top: 155px;
+  width: 683px;
+}
+
+.frame .group-3 {
+  height: 24px;
+  left: 8px;
+  position: absolute;
+  top: 4px;
+  width: 649px;
+}
+
+.frame .text-wrapper-8 {
+  color: var(--secondary-text);
+  font-family: var(--paragraph-text-font-family);
+  font-size: var(--paragraph-text-font-size);
+  font-style: var(--paragraph-text-font-style);
+  font-weight: var(--paragraph-text-font-weight);
+  left: 521px;
+  letter-spacing: var(--paragraph-text-letter-spacing);
+  line-height: var(--paragraph-text-line-height);
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 69px;
+}
+
+.frame .text-wrapper-9 {
+  color: var(--secondary-text);
+  font-family: var(--paragraph-text-font-family);
+  font-size: var(--paragraph-text-font-size);
+  font-style: var(--paragraph-text-font-style);
+  font-weight: var(--paragraph-text-font-weight);
+  left: 598px;
+  letter-spacing: var(--paragraph-text-letter-spacing);
+  line-height: var(--paragraph-text-line-height);
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 45px;
+}
+
+.frame .text-wrapper-10 {
+  color: var(--secondary-text);
+  font-family: var(--paragraph-text-font-family);
+  font-size: var(--paragraph-text-font-size);
+  font-style: var(--paragraph-text-font-style);
+  font-weight: var(--paragraph-text-font-weight);
+  left: 27px;
+  letter-spacing: var(--paragraph-text-letter-spacing);
+  line-height: var(--paragraph-text-line-height);
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 482px;
+}
+
+.frame .charm-tick-wrapper {
+  background-color: #6f32b5;
+  border-radius: 4px;
+  height: 16px;
+  left: 0;
+  position: absolute;
+  top: 4px;
+  width: 16px;
+}
+
+.frame .charm-tick {
+  height: 12px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  width: 12px;
+}
+
+.frame .kebab-icon {
+  height: 16px !important;
+  left: 659px !important;
+  position: absolute !important;
+  top: 8px !important;
+  width: 16px !important;
+}

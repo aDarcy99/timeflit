@@ -1,0 +1,51 @@
+.root {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+
+  background-color: black;
+  opacity: 0.5;
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+
+  background-color: #191b1f;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(-8px, 8px);
+}
+
+.size {
+  &--sm {
+    &.panel {
+      max-width: 230px;
+    }
+  }
+
+  &--md {
+    &.panel {
+      max-width: 300px;
+    }
+  }
+
+  &--lg {
+    &.panel {
+      max-width: 500px;
+    }
+  }
+}

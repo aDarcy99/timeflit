@@ -1,0 +1,76 @@
+// NOTE: Import global css variables
+@import './variables/colors.scss';
+
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
+}
+
+* {
+  margin: 0;
+
+  // TODO: decide if this should be declared locally in the component instead of globally like it is done now
+  &:focus-visible {
+    outline: 1px solid blueviolet;
+    // outline-offset: 2px;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  background-color: #1e2024;
+  color: #bbbaba;
+}
+
+#page-content {
+  height: 100%;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+  height: 100%;
+}
