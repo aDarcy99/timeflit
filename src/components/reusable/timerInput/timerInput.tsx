@@ -22,11 +22,12 @@ interface TTimerInputProps {
   className?: string;
   variant?: 'filled' | 'transparent';
   text?: 'paragraph' | 'heading';
-  value?: string;
+  initialValue?: string;
   state?: 'on' | 'off';
   onTimerReset?: () => void;
   onTimerToggle?: () => void;
   onTimerTick?: (time: number) => void;
+  onTimerInputBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
   menuOptions?: Array<'toggle' | 'reset' | false>;
 }
 
@@ -50,12 +51,14 @@ const TimerInput = forwardRef(
       onTimerReset,
       onTimerToggle,
       onTimerTick,
+      onTimerInputBlur,
       menuOptions = ['reset'],
+      initialValue = '',
       ...props
     }: TTimerInputProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
-    const [timerInput, setTimerInput] = useState('');
+    const [timerInput, setTimerInput] = useState(initialValue);
 
     const [isTimeSet, setIsTimeSet] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -69,12 +72,16 @@ const TimerInput = forwardRef(
       setTimerInput(e.target.value);
     };
 
-    const onTimerInputBlur = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleTimerInputBlur = (e: ChangeEvent<HTMLInputElement>) => {
       if (!e.target.value) {
         return;
       }
 
       setIsTimeSet(true);
+
+      if (onTimerInputBlur) {
+        onTimerInputBlur(e);
+      }
     };
 
     const handleTimerToggle = () => {
@@ -127,7 +134,7 @@ const TimerInput = forwardRef(
                 type='text'
                 value={timerInput}
                 onChange={onTimerInputChange}
-                onBlur={onTimerInputBlur}
+                onBlur={handleTimerInputBlur}
               />
             ) : null}
           </div>
