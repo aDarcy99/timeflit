@@ -33,13 +33,21 @@ const Task = forwardRef(({ task, rootProps, ...props }: TTaskProps, ref: Forward
   const { deleteSingleTaskById, updateSingleTaskById } = useContext(TaskContext);
 
   const [nameInput, setNameInput] = useState(task.name);
+  const [checkboxInput, setCheckboxInput] = useState(task.isCompleted);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   // Task item functions
-  const onSetTaskTimeButtonClick = () => {};
 
   const onDeleteTaskButtonClick = () => {
     deleteSingleTaskById(task.taskListId, task.id);
+  };
+
+  const onCheckboxInputClick = () => {
+    const newCheckboxValue = !checkboxInput;
+
+    setCheckboxInput(newCheckboxValue);
+
+    updateSingleTaskById(task.taskListId, task.id, { isCompleted: newCheckboxValue });
   };
 
   const onNameInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -50,6 +58,12 @@ const Task = forwardRef(({ task, rootProps, ...props }: TTaskProps, ref: Forward
 
   const onNameInputBlur = () => {
     updateSingleTaskById(task.taskListId, task.id, { name: nameInput });
+  };
+
+  const onEstimateTimeInputBlur = (e: ChangeEvent<HTMLInputElement>) => {
+    const estimateTime = Number(e.target.value);
+
+    updateSingleTaskById(task.taskListId, task.id, { time: { estimate: estimateTime } });
   };
 
   const onOptionsButtonClick = () => {
@@ -77,7 +91,7 @@ const Task = forwardRef(({ task, rootProps, ...props }: TTaskProps, ref: Forward
   return (
     <div {...rootProps} ref={ref} key={task.id} className={classes['root']}>
       <div className={clsx(classes['item'], classes['checkbox-item'])}>
-        <Checkbox className={classes['checkbox']} />
+        <Checkbox className={classes['checkbox']} value={checkboxInput} onClick={onCheckboxInputClick} />
       </div>
       <div className={clsx(classes['item'], classes['name-item'])}>
         <MultilineTextInput
@@ -91,8 +105,13 @@ const Task = forwardRef(({ task, rootProps, ...props }: TTaskProps, ref: Forward
           onBlur={onNameInputBlur}
         />
       </div>
-      <div className={classes['item']} onClick={onSetTaskTimeButtonClick}>
-        <TimerInput rootProps={{ className: classes['time-input'] }} variant='transparent' />
+      <div className={classes['item']}>
+        <TimerInput
+          rootProps={{ className: classes['time-input'] }}
+          variant='transparent'
+          initialValue={String(task.time.estimate)}
+          onTimerInputBlur={onEstimateTimeInputBlur}
+        />
       </div>
       <div className={classes['item']}>
         <Stopwatch
