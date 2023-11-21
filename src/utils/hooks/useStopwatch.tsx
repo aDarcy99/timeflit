@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 type TUseStopWatchProps = {
-  defaultTimeElapsed?: number;
+  initialTimeElapsed?: number;
 };
 
 const useStopwatch = (options?: TUseStopWatchProps) => {
-  const { defaultTimeElapsed } = options || {};
+  const { initialTimeElapsed } = options || {};
 
-  const [timeElapsed, setTimeElapsed] = useState<number>(defaultTimeElapsed || 0);
+  const [timeElapsed, setTimeElapsed] = useState<number>(initialTimeElapsed || 0);
 
   const [isStopwatchActive, setIsTimerActive] = useState(false);
 

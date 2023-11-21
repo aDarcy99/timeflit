@@ -118,7 +118,7 @@ const Task = forwardRef(({ task, rootProps, ...props }: TTaskProps, ref: Forward
           className={classes['time-input']}
           // TODO: Rework the defaultTimeElapsed prop, current prop name does not give context that the defaultTimeElapsed is expected in milliseconds
           // so we have to multiple the actual time by 100.
-          defaultTimeElapsed={task.time.actual * 100}
+          initialTimeElapsed={task.time.actual * 100}
           onStopwatchTick={onStopwatchTick}
           onStopwatchToggle={onStopwatchToggle}
           onStopwatchReset={onStopwatchReset}

@@ -21,7 +21,7 @@ interface TStopwatchProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInpu
   className?: string;
   variant?: 'filled' | 'transparent';
   text?: 'paragraph' | 'heading';
-  defaultTimeElapsed?: number;
+  initialTimeElapsed?: number;
   onStopwatchReset?: () => void;
   onStopwatchToggle?: ({ isActive }: stopwatchToggleEvent) => void;
   onStopwatchTick?: ({ timeElapsed }: stopwatchTickEvent) => void;
@@ -33,7 +33,7 @@ const Stopwatch = forwardRef(
       variant = 'filled',
       className,
       text = 'paragraph',
-      defaultTimeElapsed = 0,
+      initialTimeElapsed = 0,
       onStopwatchReset,
       onStopwatchToggle,
       onStopwatchTick,
@@ -42,7 +42,7 @@ const Stopwatch = forwardRef(
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { timeElapsed, isStopwatchActive, toggle, reset } = useStopwatch({ defaultTimeElapsed });
+    const { timeElapsed, isStopwatchActive, toggle, reset } = useStopwatch({ initialTimeElapsed });
 
     const secondsElasped = timeElapsed / 100;
 
