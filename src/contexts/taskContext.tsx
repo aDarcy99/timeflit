@@ -25,6 +25,7 @@ type TUpdateTaskListItemArrayIndex = (startIndex: number, endIndex: number) => v
 export type TTask = {
   taskListId: string;
   id: string;
+  isCompleted: boolean;
   name: string;
   description: string;
   time: { isActive: boolean; estimate: number; actual: number };
@@ -34,6 +35,7 @@ type TUpdateSingleTaskById = (
   taskListId: string,
   taskId: string,
   data: {
+    isCompleted?: boolean;
     name?: string;
     description?: string;
     time?: {
@@ -76,13 +78,20 @@ type TTaskListContext = {
   saveTaskListsToDisk: TSaveTaskListsToDisk;
 };
 
-function createDefaultTaskListList({ name = 'New task list' } = {}): TTaskList {
+function createDefaultTaskList({ name = 'New task list' } = {}): TTaskList {
   return JSON.parse(JSON.stringify({ id: uuid(), name, tasks: [] }));
 }
 
-function createDefaultTaskList(taskListId: string): TTask {
+function createDefaultTask(taskListId: string): TTask {
   return JSON.parse(
-    JSON.stringify({ taskListId: taskListId, id: uuid(), name: '', description: 'New task description', time: { isActive: false, estimate: 0, actual: 0 } })
+    JSON.stringify({
+      taskListId: taskListId,
+      id: uuid(),
+      isCompleted: false,
+      name: '',
+      description: 'New task description',
+      time: { isActive: false, estimate: 0, actual: 0 },
+    })
   );
 }
 
@@ -94,7 +103,7 @@ const TaskProvider = ({ children }: TTaskListProvider) => {
 
   // Task functions
   const createSingleTaskList: TCreateSingleTaskList = () => {
-    setTaskLists([...taskLists, createDefaultTaskListList()]);
+    setTaskLists([...taskLists, createDefaultTaskList()]);
   };
 
   const deleteSingleTaskListById: TDeleteSingleTaskListById = (id) => {
@@ -126,7 +135,7 @@ const TaskProvider = ({ children }: TTaskListProvider) => {
 
   // Task item functions
   const createSingleTask: TCreateSingleTask = (taskListId) => {
-    setTaskLists(taskLists.map((task) => (task.id === taskListId ? { ...task, tasks: [...task.tasks, createDefaultTaskList(taskListId)] } : task)));
+    setTaskLists(taskLists.map((task) => (task.id === taskListId ? { ...task, tasks: [...task.tasks, createDefaultTask(taskListId)] } : task)));
   };
 
   const deleteSingleTaskById: TDeleteSingleTaskById = (taskListId, taskId) => {
