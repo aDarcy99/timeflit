@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/",
     /* Language and Environment */
-    "module": "es6",
+    "module": "ESNext",
     "target": "es5",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
