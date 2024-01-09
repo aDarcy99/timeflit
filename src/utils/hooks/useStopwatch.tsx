@@ -21,16 +21,27 @@ const useStopwatch = (options?: TUseStopWatchProps) => {
   };
 
   useEffect(() => {
-    let timerId: NodeJS.Timer;
+    let worker: undefined | Worker;
 
-    if (isStopwatchActive) {
-      timerId = setInterval(() => {
-        setTimeElapsed(timeElapsed + 1);
-      }, 10);
+    if (!isStopwatchActive) {
+      worker?.terminate();
+      return;
     }
 
-    return () => clearInterval(timerId);
-  }, [isStopwatchActive, timeElapsed]);
+    worker = new Worker(new URL('../../utils/workers/stopwatchWorker.ts', import.meta.url), { name: `${timeElapsed}` });
+
+    worker.addEventListener('message', (event) => {
+      const { timeElapsed } = event.data;
+
+      setTimeElapsed(timeElapsed);
+    });
+
+    return () => {
+      if (worker) {
+        worker.terminate();
+      }
+    };
+  }, [isStopwatchActive]);
 
   return { timeElapsed, isStopwatchActive, toggle, reset };
 };
