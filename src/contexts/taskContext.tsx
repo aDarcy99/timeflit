@@ -1,11 +1,11 @@
-import React, { createContext, useMemo, useState } from 'react';
+import React, { createContext, useMemo, useState } from "react";
 // Functions
-import merge from 'lodash.merge';
-import { v4 as uuid } from 'uuid';
-import useLocalStorageState from '../utils/hooks/useLocalStorageState';
-import { reorderArray } from '../utils/array';
-import { createSingleFile, readSingleFile } from '../utils/file';
-import { latestVersion } from '../constants/versions';
+import merge from "lodash.merge";
+import { v4 as uuid } from "uuid";
+import useLocalStorageState from "../utils/hooks/useLocalStorageState";
+import { reorderArray } from "../utils/array";
+import { createSingleFile, readSingleFile } from "../utils/file";
+import { latestVersion } from "../constants/versions";
 
 // Task list types
 export type TTaskList = {
@@ -17,9 +17,18 @@ type TCreateSingleTaskList = () => void;
 
 type TDeleteSingleTaskListById = (id: string) => void;
 
-type TUpdateSingleTaskListById = (id: string, data: Partial<TTaskList>, options?: { mergeType?: 'deep' | 'spread' }) => void;
+type TUpdateSingleTaskListById = (
+  id: string,
+  data: Partial<TTaskList>,
+  options?: { mergeType?: "deep" | "spread" }
+) => void;
 
-type TUpdateTaskListItemArrayIndex = (startIndex: number, endIndex: number) => void;
+type TUpdateTaskListItemArrayIndex = (
+  startIndex: number,
+  endIndex: number
+) => void;
+
+type TDuplicateSingleTaskListById = (id: string) => void;
 
 // Task types
 export type TTask = {
@@ -50,7 +59,11 @@ type TDeleteSingleTaskById = (taskListId: string, taskId: string) => void;
 
 type TCreateSingleTask = (taskListId: string) => void;
 
-type TUpdateTaskItemArrayIndex = (taskListId: string, startIndex: number, endIndex: number) => void;
+type TUpdateTaskItemArrayIndex = (
+  taskListId: string,
+  startIndex: number,
+  endIndex: number
+) => void;
 
 // Task save/load task functions
 type TReadTaskListsFromDisk = () => void;
@@ -68,6 +81,7 @@ type TTaskListContext = {
   deleteSingleTaskListById: TDeleteSingleTaskListById;
   updateSingleTaskListById: TUpdateSingleTaskListById;
   updateTaskListItemArrayIndex: TUpdateTaskListItemArrayIndex;
+  duplicateSingleTaskListById: TDuplicateSingleTaskListById;
   // Task values & functions
   createSingleTask: TCreateSingleTask;
   deleteSingleTaskById: TDeleteSingleTaskById;
@@ -78,7 +92,7 @@ type TTaskListContext = {
   saveTaskListsToDisk: TSaveTaskListsToDisk;
 };
 
-function createDefaultTaskList({ name = 'New task list' } = {}): TTaskList {
+function createDefaultTaskList({ name = "New task list" } = {}): TTaskList {
   return JSON.parse(JSON.stringify({ id: uuid(), name, tasks: [] }));
 }
 
@@ -88,8 +102,8 @@ function createDefaultTask(taskListId: string): TTask {
       taskListId: taskListId,
       id: uuid(),
       isCompleted: false,
-      name: '',
-      description: 'New task description',
+      name: "",
+      description: "New task description",
       time: { isActive: false, estimate: 0, actual: 0 },
     })
   );
@@ -99,7 +113,10 @@ function createDefaultTask(taskListId: string): TTask {
 export const TaskContext = createContext<TTaskListContext>(undefined!);
 
 const TaskProvider = ({ children }: TTaskListProvider) => {
-  const [taskLists, setTaskLists] = useLocalStorageState<Array<TTaskList>>([], 'taskLists');
+  const [taskLists, setTaskLists] = useLocalStorageState<Array<TTaskList>>(
+    [],
+    "taskLists"
+  );
 
   // Task functions
   const createSingleTaskList: TCreateSingleTaskList = () => {
@@ -110,55 +127,133 @@ const TaskProvider = ({ children }: TTaskListProvider) => {
     setTaskLists(taskLists.filter((task) => task.id !== id));
   };
 
-  const updateSingleTaskListById: TUpdateSingleTaskListById = (id, data, options) => {
-    const { mergeType = 'deep' } = options || {};
+  const updateSingleTaskListById: TUpdateSingleTaskListById = (
+    id,
+    data,
+    options
+  ) => {
+    const { mergeType = "deep" } = options || {};
 
     switch (mergeType) {
-      // NOTE: Required when we need to update array items inside taskLists (e.g. tasks) because the lodash merge function doesnt properly merge changes to array items.
-      case 'spread':
-        setTaskLists(taskLists.map((task) => (task.id === id ? { ...task, ...data } : task)));
+      // NOTE: The spread option is required when we need to update array items inside taskLists (e.g. tasks) because the lodash merge function doesnt properly merge changes to array items.
+      case "spread":
+        setTaskLists(
+          taskLists.map((task) =>
+            task.id === id ? { ...task, ...data } : task
+          )
+        );
         return;
 
-      case 'deep':
+      case "deep":
       default:
-        setTaskLists(taskLists.map((task) => (task.id === id ? merge(task, data) : task)));
+        setTaskLists(
+          taskLists.map((task) => (task.id === id ? merge(task, data) : task))
+        );
         return;
     }
   };
 
   // TODO: think of more descriptive name for this function
-  const updateTaskListItemArrayIndex: TUpdateTaskListItemArrayIndex = (startIndex, endIndex) => {
+  const updateTaskListItemArrayIndex: TUpdateTaskListItemArrayIndex = (
+    startIndex,
+    endIndex
+  ) => {
     const reorderedTasks = reorderArray(taskLists, startIndex, endIndex);
 
     setTaskLists(reorderedTasks);
   };
 
-  // Task item functions
-  const createSingleTask: TCreateSingleTask = (taskListId) => {
-    setTaskLists(taskLists.map((task) => (task.id === taskListId ? { ...task, tasks: [...task.tasks, createDefaultTask(taskListId)] } : task)));
-  };
-
-  const deleteSingleTaskById: TDeleteSingleTaskById = (taskListId, taskId) => {
-    setTaskLists(taskLists.map((task) => (task.id === taskListId ? { ...task, tasks: task.tasks.filter((task) => task.id !== taskId) } : task)));
-  };
-
-  const updateSingleTaskById: TUpdateSingleTaskById = (taskListId, taskId, data) => {
-    setTaskLists(
-      taskLists.map((task) => (task.id === taskListId ? { ...task, tasks: task.tasks.map((task) => (task.id === taskId ? merge(task, data) : task)) } : task))
+  const duplicateSingleTaskListById: TDuplicateSingleTaskListById = (
+    taskListId
+  ) => {
+    let duplicatedTaskList = taskLists.find(
+      (taskList) => taskList.id === taskListId
     );
-  };
 
-  const updateTaskItemArrayIndex: TUpdateTaskItemArrayIndex = (taskListId, startIndex, endIndex) => {
-    const currentlyEditingTask = taskLists.find((task) => taskListId === task.id);
-
-    if (!currentlyEditingTask) {
-      console.log('Error updating task array index');
+    if (duplicatedTaskList === undefined) {
+      console.error("Error duplicating single task list.");
       return;
     }
 
-    const reorderedTasks = reorderArray(currentlyEditingTask.tasks, startIndex, endIndex);
+    // Create new ids in the tasklist for the tasklist and the child tasks
+    duplicatedTaskList = {
+      id: uuid(),
+      name: `Copy of ${duplicatedTaskList.name}`,
+      tasks: duplicatedTaskList.tasks.map((task) => ({
+        ...task,
+        taskListId: duplicatedTaskList?.id as string,
+        id: uuid(),
+      })),
+    };
 
-    updateSingleTaskListById(taskListId, { tasks: reorderedTasks }, { mergeType: 'spread' });
+    setTaskLists([...taskLists, duplicatedTaskList]);
+  };
+
+  // Task item functions
+  const createSingleTask: TCreateSingleTask = (taskListId) => {
+    setTaskLists(
+      taskLists.map((task) =>
+        task.id === taskListId
+          ? { ...task, tasks: [...task.tasks, createDefaultTask(taskListId)] }
+          : task
+      )
+    );
+  };
+
+  const deleteSingleTaskById: TDeleteSingleTaskById = (taskListId, taskId) => {
+    setTaskLists(
+      taskLists.map((task) =>
+        task.id === taskListId
+          ? { ...task, tasks: task.tasks.filter((task) => task.id !== taskId) }
+          : task
+      )
+    );
+  };
+
+  const updateSingleTaskById: TUpdateSingleTaskById = (
+    taskListId,
+    taskId,
+    data
+  ) => {
+    setTaskLists(
+      taskLists.map((task) =>
+        task.id === taskListId
+          ? {
+              ...task,
+              tasks: task.tasks.map((task) =>
+                task.id === taskId ? merge(task, data) : task
+              ),
+            }
+          : task
+      )
+    );
+  };
+
+  const updateTaskItemArrayIndex: TUpdateTaskItemArrayIndex = (
+    taskListId,
+    startIndex,
+    endIndex
+  ) => {
+    const currentlyEditingTask = taskLists.find(
+      (task) => taskListId === task.id
+    );
+
+    if (!currentlyEditingTask) {
+      console.log("Error updating task array index");
+      return;
+    }
+
+    const reorderedTasks = reorderArray(
+      currentlyEditingTask.tasks,
+      startIndex,
+      endIndex
+    );
+
+    updateSingleTaskListById(
+      taskListId,
+      { tasks: reorderedTasks },
+      { mergeType: "spread" }
+    );
   };
 
   // Task save/load task functions
@@ -169,12 +264,12 @@ const TaskProvider = ({ children }: TTaskListProvider) => {
       file = JSON.parse(file);
 
       if (!file.version) {
-        throw new Error('Version does not exist');
+        console.error("Version does not exist");
       }
 
       setTaskLists(file.taskLists);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -184,8 +279,8 @@ const TaskProvider = ({ children }: TTaskListProvider) => {
         version: latestVersion,
         taskLists,
       }),
-      'timeflit_taskLists',
-      'application/json'
+      "timeflit_taskLists",
+      "application/json"
     );
   };
 
@@ -196,6 +291,7 @@ const TaskProvider = ({ children }: TTaskListProvider) => {
     deleteSingleTaskListById,
     updateSingleTaskListById,
     updateTaskListItemArrayIndex,
+    duplicateSingleTaskListById,
     // Task values and functions
     createSingleTask,
     deleteSingleTaskById,
@@ -206,7 +302,11 @@ const TaskProvider = ({ children }: TTaskListProvider) => {
     saveTaskListsToDisk,
   };
 
-  return <TaskContext.Provider value={taskContextValue}>{children}</TaskContext.Provider>;
+  return (
+    <TaskContext.Provider value={taskContextValue}>
+      {children}
+    </TaskContext.Provider>
+  );
 };
 
 export default TaskProvider;
