@@ -75,19 +75,24 @@
   transition: 1s background-color;
 
   &:hover,
-  &:focus-within {
+  &:focus-within,
+  &.is-focused {
     background-color: #282b30;
 
-    .delete-button {
+    .settings-button {
       opacity: 1;
     }
   }
 }
 
-.delete-button {
+.settings-button {
   flex-shrink: 0;
   opacity: 0;
   margin-left: auto;
+}
+.delete-button,
+.duplicate-button {
+  gap: 8px;
 }
 
 .new-task-list-button,
