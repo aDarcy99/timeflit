@@ -1,5 +1,6 @@
 .root {
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   display: flex;
 
   background-color: #15171a;
