@@ -1,6 +1,7 @@
 import React, { createContext, useMemo, useState } from "react";
 // Functions
 import merge from "lodash.merge";
+import cloneDeep from "lodash/cloneDeep";
 import { v4 as uuid } from "uuid";
 import useLocalStorageState from "../utils/hooks/useLocalStorageState";
 import { reorderArray } from "../utils/array";
@@ -170,18 +171,22 @@ const TaskProvider = ({ children }: TTaskListProvider) => {
       (taskList) => taskList.id === taskListId
     );
 
+    duplicatedTaskList = cloneDeep(duplicatedTaskList);
+
     if (duplicatedTaskList === undefined) {
       console.error("Error duplicating single task list.");
       return;
     }
 
+    const newDuplicatedTaskListId = uuid();
+
     // Create new ids in the tasklist for the tasklist and the child tasks
     duplicatedTaskList = {
-      id: uuid(),
+      id: newDuplicatedTaskListId,
       name: `Copy of ${duplicatedTaskList.name}`,
       tasks: duplicatedTaskList.tasks.map((task) => ({
         ...task,
-        taskListId: duplicatedTaskList?.id as string,
+        taskListId: newDuplicatedTaskListId,
         id: uuid(),
       })),
     };
